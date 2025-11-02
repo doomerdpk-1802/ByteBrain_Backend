@@ -25,7 +25,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@16.171.52.44 << EOF
+          ssh -o StrictHostKeyChecking=no ubuntu@13.49.73.62 << EOF
           set -e
 
           echo "🔹 Loading Node environment"
