@@ -27,8 +27,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no ubuntu@13.62.19.173 << EOF
 
           export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-          export PATH=$PATH:/usr/bin:/usr/local/bin
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
            if [ -d "ByteBrain_Backend" ]; then
               cd ByteBrain_Backend
