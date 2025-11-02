@@ -31,23 +31,23 @@ jobs:
           [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
            if [ -d "ByteBrain_Backend" ]; then
-              cd ByteBrain_Backend
-              git pull origin master
-            else
-              git clone https://github.com/doomerdpk-1802/ByteBrain_Backend.git
-              cd ByteBrain_Backend
-            fi
+            cd ByteBrain_Backend
+            git pull origin master
+          else
+            git clone https://github.com/doomerdpk-1802/ByteBrain_Backend.git
+            cd ByteBrain_Backend
+          fi
 
-            npm install
+          npm install
 
-           cat > .env <<EOL
-            DATABASE_URL=$DATABASE_URL
-            JWT_SECRET=$JWT_SECRET
-            EOL
+          cat > .env <<EOL
+          DATABASE_URL=$DATABASE_URL
+          JWT_SECRET=$JWT_SECRET
+          EOL
 
 
-            command -v pm2 >/dev/null 2>&1 || npm install -g pm2
+          command -v pm2 >/dev/null 2>&1 || npm install -g pm2
 
-            npm run stop:pm2 || true
-            npm run start:pm2
+          npm run stop:pm2 || true
+          npm run start:pm2
           EOF
