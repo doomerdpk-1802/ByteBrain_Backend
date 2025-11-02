@@ -33,7 +33,7 @@ jobs:
               cd ByteBrain_Backend
             fi
 
-            npm install
+            /usr/local/bin/npm install
 
            cat > .env <<EOL
             DATABASE_URL=$DATABASE_URL
@@ -41,8 +41,8 @@ jobs:
             EOL
 
 
-            command -v pm2 >/dev/null 2>&1 || npm install -g pm2
+            command -v pm2 >/dev/null 2>&1 || /usr/local/bin/npm install -g pm2
 
-            npm run stop:pm2 || true
-            npm run start:pm2
+            /usr/local/bin/npm run stop:pm2 || true
+            /usr/local/bin/npm run start:pm2
           EOF
