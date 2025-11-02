@@ -26,12 +26,12 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@16.171.52.44 << EOF
 
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-           export PATH="$NVM_DIR/versions/node/v22.20.0/bin:$PATH"
+          export NVM_DIR="\$HOME/.nvm"
+          [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
+          [ -s "\$NVM_DIR/bash_completion" ] && \. "\$NVM_DIR/bash_completion"
+          export PATH="\$NVM_DIR/versions/node/v22.20.0/bin:\$PATH"
 
-           if [ -d "ByteBrain_Backend" ]; then
+          if [ -d "ByteBrain_Backend" ]; then
             cd ByteBrain_Backend
             git pull origin master
           else
@@ -41,9 +41,10 @@ jobs:
 
           npm install
 
-          echo 'DATABASE_URL=${DATABASE_URL}' > .env
-          echo 'JWT_SECRET=${JWT_SECRET}' >> .env
-
+          cat > .env <<EOL
+          DATABASE_URL=${DATABASE_URL}
+          JWT_SECRET=${JWT_SECRET}
+          EOL
 
           command -v pm2 >/dev/null 2>&1 || npm install -g pm2
 
