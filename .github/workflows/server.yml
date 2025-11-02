@@ -24,11 +24,12 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@16.171.52.44 << EOF
+          ssh -o StrictHostKeyChecking=no ubuntu@16.171.52.44 << "EOF"
 
           export NVM_DIR="$HOME/.nvm"
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
           [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+           export PATH="$NVM_DIR/versions/node/v22.20.0/bin:$PATH"
 
            if [ -d "ByteBrain_Backend" ]; then
             cd ByteBrain_Backend
