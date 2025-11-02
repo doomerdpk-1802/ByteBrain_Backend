@@ -41,10 +41,8 @@ jobs:
 
           npm install
 
-          cat > .env <<EOL
-          DATABASE_URL=$DATABASE_URL
-          JWT_SECRET=$JWT_SECRET
-          EOL
+          echo 'DATABASE_URL=${DATABASE_URL}' > .env
+          echo 'JWT_SECRET=${JWT_SECRET}' >> .env
 
 
           command -v pm2 >/dev/null 2>&1 || npm install -g pm2
