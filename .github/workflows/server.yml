@@ -23,7 +23,6 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          DOMAIN: bytebrain.api.deepak.cfd
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@13.62.19.173 << 'EOF'
 
@@ -61,6 +60,6 @@ jobs:
             sudo apt-get install -y certbot python3-certbot-nginx
           fi
 
-          sudo certbot --nginx -d ${DOMAIN} --non-interactive --agree-tos --register-unsafely-without-email
+          sudo certbot --nginx -d "bytebrain.api.deepak.cfd" --non-interactive --agree-tos --register-unsafely-without-email
 
           EOF
