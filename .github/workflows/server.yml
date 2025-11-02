@@ -58,7 +58,6 @@ jobs:
 
           pm2 stop all || true
           pm2 start dist/index.js --name bytebrain
-          pm2 logs bytebrain --lines 30
 
           echo "🔹 Updating NGINX config"
           sudo cp ./nginx.conf /etc/nginx/nginx.conf
