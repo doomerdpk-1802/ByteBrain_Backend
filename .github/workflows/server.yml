@@ -1,0 +1,48 @@
+name: Start Application on Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy-app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Deploy to EC2
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@13.62.19.173 << EOF
+           if [ -d "ByteBrain_Backend" ]; then
+              cd ByteBrain_Backend
+              git pull origin master
+            else
+              git clone git@github.com:doomerdpk-1802/ByteBrain_Backend.git
+              cd ByteBrain_Backend
+            fi
+
+            npm install
+
+           cat > .env <<EOL
+            DATABASE_URL=$DATABASE_URL
+            JWT_SECRET=$JWT_SECRET
+            EOL
+
+
+            command -v pm2 >/dev/null 2>&1 || npm install -g pm2
+
+            npm run stop:pm2 || true
+            npm run start:pm2
+          EOF
