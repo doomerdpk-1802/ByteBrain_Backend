@@ -23,6 +23,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          DOMAIN: bytebrain.api.deepak.cfd
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@13.62.19.173 << 'EOF'
 
@@ -51,7 +52,7 @@ jobs:
           npm run stop:pm2 || true
           npm run start:pm2
 
-          cd /home/ubuntu/LearnSphere
+          cd /home/ubuntu/ByteBrain_Backend
           sudo cp ./nginx.conf /etc/nginx/nginx.conf
           sudo nginx -t && sudo systemctl reload nginx
 
