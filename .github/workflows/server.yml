@@ -20,26 +20,19 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-      - name: Copy .env to EC2
+      - name: Deploy to EC2
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
-          echo "DATABASE_URL=${DATABASE_URL}" > .env
-          echo "JWT_SECRET=${JWT_SECRET}" >> .env
-          ssh -o StrictHostKeyChecking=no ubuntu@16.171.52.44 "mkdir -p ~/ByteBrain_Backend"
-          scp -o StrictHostKeyChecking=no .env ubuntu@16.171.52.44:~/ByteBrain_Backend/.env
-
-      - name: Deploy to EC2
-        run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@16.171.52.44 << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@16.171.52.44 << EOF
           set -e
 
           echo "🔹 Loading Node environment"
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-          [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-          export PATH="$NVM_DIR/versions/node/$(nvm version)/bin:$PATH"
+          export NVM_DIR="\$HOME/.nvm"
+          [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
+          [ -s "\$NVM_DIR/bash_completion" ] && . "\$NVM_DIR/bash_completion"
+          export PATH="\$NVM_DIR/versions/node/\$(nvm version)/bin:\$PATH"
 
           echo "🔹 Cloning or updating repository"
           if [ -d "ByteBrain_Backend" ]; then
@@ -50,8 +43,16 @@ jobs:
             cd ByteBrain_Backend
           fi
 
+          echo "🔹 Writing .env file"
+          echo "DATABASE_URL=${DATABASE_URL}" > .env
+          echo "JWT_SECRET=${JWT_SECRET}" >> .env
+          cat .env | sed 's/=.*/=*****/'  
+
           echo "🔹 Installing dependencies"
           npm install --legacy-peer-deps
+
+          echo "🔹 Building the project"
+          npm run build
 
           echo "🔹 Starting app with PM2"
           if ! command -v pm2 >/dev/null 2>&1; then
