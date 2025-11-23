@@ -26,7 +26,6 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@16.171.177.92<< EOF
-          set -e
 
           echo "🔹 Cloning or updating repository"
           if [ -d "ByteBrain_Backend" ]; then
