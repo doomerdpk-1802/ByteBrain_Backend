@@ -44,6 +44,8 @@ jobs:
           echo "🔹 Installing dependencies"
           npm install --legacy-peer-deps
           npm i pm2
+          npm i typescript
+          npx tsc -b
           npx pm2 stop all || true
           npx pm2 start dist/index.js --name bytebrain
 
