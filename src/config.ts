@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({ path: "/app/secrets/.env" });
+dotenv.config();
 
 // const DATABASE_URL_TEST = process.env.DATABASE_URL_TEST;
 const DATABASE_URL = process.env.DATABASE_URL;
