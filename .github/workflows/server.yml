@@ -43,9 +43,9 @@ jobs:
 
           echo "🔹 Installing dependencies"
           npm install --legacy-peer-deps
-          cd /home/ubuntu/ByteBrain_Backend
-          pm2 stop all || true
-          pm2 start dist/index.js --name bytebrain
+          npm i pm2
+          npx pm2 stop all || true
+          npx pm2 start dist/index.js --name bytebrain
 
           echo "🔹 Updating NGINX config"
           sudo cp ./nginx.conf /etc/nginx/nginx.conf
