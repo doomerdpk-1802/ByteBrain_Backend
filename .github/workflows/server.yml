@@ -26,10 +26,8 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@13.60.63.159<< EOF
-
           export NVM_DIR="/home/ubuntu/.nvm"
-          source "$NVM_DIR/nvm.sh"
-          source "$NVM_DIR/bash_completion"
+          [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
 
           node -v
           npm -v
