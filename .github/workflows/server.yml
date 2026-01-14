@@ -27,9 +27,12 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@13.60.63.159<< EOF
 
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          nvm use 24.1.0
+          export NVM_DIR="/home/ubuntu/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          source "$NVM_DIR/bash_completion"
+
+          node -v
+          npm -v
 
           echo "*****Cloning or updating repository"
           if [ -d "ByteBrain_Backend" ]; then
